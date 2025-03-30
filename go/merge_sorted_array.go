@@ -3,21 +3,25 @@ package main
 import "fmt"
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
-	total_length := n + m
-	for i := m - 1; i == total_length-1; i++ {
-		nums1[i] = nums2[i]
-		fmt.Println(nums2)
-	}
-	previous_value := 0
-	for i := 0; i == total_length; i++ {
-		if nums1[1] < previous_value {
-			previous_value = nums1[i-1]
-			nums1[i-1] = nums1[i]
-			nums1[i] = previous_value
+	i, j, k := m-1, n-1, m+n-1
+
+	for i >= 0 && j >= 0 {
+		if nums1[i] > nums2[j] {
+			nums1[k] = nums1[i]
+			i--
 		} else {
-			previous_value = nums1[1]
+			nums1[k] = nums2[j]
+			j--
 		}
+		k--
 	}
+
+	for j >= 0 {
+		nums1[k] = nums2[j]
+		j--
+		k--
+	}
+
 	fmt.Println(nums1)
 }
 
@@ -27,5 +31,5 @@ func main() {
 	nums2 := []int{2, 5, 6}
 	n := 3
 
-	merge(nums1, m, nums2, n) // Correct function call
+	merge(nums1, m, nums2, n)
 }
